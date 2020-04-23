@@ -10,7 +10,7 @@ public class TestMeteoDAO {
 		
 		MeteoDAO dao = new MeteoDAO();
 
-		List<Rilevamento> list = dao.getAllRilevamenti();
+		List<Rilevamento> list = dao.getRilevamenti15giorni(1, "Genova");
 
 		// STAMPA: localita, giorno, mese, anno, umidita (%)
 		for (Rilevamento r : list) {

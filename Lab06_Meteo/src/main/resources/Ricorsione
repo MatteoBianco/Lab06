@@ -1,0 +1,24 @@
+1- il livello rappresenta il numero di giornate già trascorse, da 0 a 14 (15 giornate)
+2- una soluzione parziale è fatta di un numero di Rilevazioni, una per giorno, pari al livello L. 
+   Ogni giorno posso scegliere in che città sarà la rilevazione effettuata
+3- una soluzione parziale è completa se ho rilevato fino al 15 del mese in analisi, una per giorno
+4- una soluzione parziale è valida se rispetta le condizioni necessarie:
+	. massimo 6 giorni consecutivi nella stessa città
+	. se ho trascorso meno di 3 giorni consecutivi in una data città, non posso spostarmi
+	. ha al massimo una rilevazione per giorno
+5- data una soluzione completa, le condizioni necessarie affinché sia valida sono:
+	. tutte le città del DB devono essere visitate almeno una volta
+	. massimo 6 giorni consecutivi nella stessa città
+	. minimo 3 giorni consecutivi nella stessa città
+6- a partire dal livello L, passo al livello L+1 aggiungendo una giornata di rilevazione
+7- una ArrayList può essere una soluzione adeguata a memorizzare la soluzione
+8- per memorizzare lo stato della ricerca, mi servono il livello e i giorni consecutivi trascorsi 
+   finora nella località attiva
+
+
+A- livello 15, 15 rilevazioni completate/rilevazione al giorno 15 del mese selezionato
+B- genero una nuova soluzione aggiungendo alla lista delle rilevazioni una data rilevazione 
+   avvenuta nel giorno successivo
+C- effettuo la chiamata ricorsiva solo se ho una soluzione parziale valida (come spiegato in precedenza)
+D- rimuovo la giornata aggiunta alla lista, ne aggiungo un'altra  
+E- //
