@@ -45,6 +45,19 @@ public class Model {
 	private void ricorsione(List<Rilevamento> parziale, int l, String cittaAttuale, int consecutivi, 
 			List<String> cittaRimanenti) {
 		
+		if(l>NUMERO_GIORNI_CITTA_MAX) {
+			Map<String, Integer> frequenza = new HashMap<>();
+			for(Rilevamento r : parziale) {
+				if(frequenza.containsKey(r.getLocalita()))
+					frequenza.put(r.getLocalita(), frequenza.get(r.getLocalita()) + 1);
+				else frequenza.put(r.getLocalita(), 1);
+			}
+			for(Integer i : frequenza.values()) {
+				if(i>NUMERO_GIORNI_CITTA_MAX)
+					return;
+			}
+		}
+		
 		if(l == (NUMERO_GIORNI_TOTALI)) {
 			if(consecutivi >= NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN && cittaRimanenti.isEmpty()) {
 				if(bestCosto == -1) {
@@ -60,27 +73,15 @@ public class Model {
 			}
 			return;
 		}	
-	
-		if(l>NUMERO_GIORNI_CITTA_MAX) {
-			Map<String, Integer> frequenza = new HashMap<>();
-			for(Rilevamento r : parziale) {
-				if(frequenza.containsKey(r.getLocalita()))
-					frequenza.put(r.getLocalita(), frequenza.get(r.getLocalita()) + 1);
-				else frequenza.put(r.getLocalita(), 1);
-			}
-			for(Integer i : frequenza.values()) {
-				if(i>NUMERO_GIORNI_CITTA_MAX)
-					return;
-			}
-		}
 		
 		if(consecutivi > 0 && consecutivi < NUMERO_GIORNI_CITTA_CONSECUTIVI_MIN) {
 			boolean trovato = false;
 			for(Rilevamento ril : rilevamentiPerCitta.get(cittaAttuale)) {
 				if(ril.getData().getDate() == (l+1) && !trovato) {
-					parziale.add(rilevamentiPerCitta.get(cittaAttuale).get(l));
+					parziale.add(ril);
 					trovato = true;
 					ricorsione(parziale, l+1, cittaAttuale, consecutivi+1, cittaRimanenti);
+					parziale.remove(parziale.size()-1);
 					return;
 				}
 			}
